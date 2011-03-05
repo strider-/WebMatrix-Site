@@ -1,0 +1,20 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    // Cache the image
+    Response.OutputCache((int)App.CacheLength);
+    
+    Layout = null;
+    var imageId = UrlData[0].AsInt();
+    var model = new Model();
+    var image = model.GetImage(imageId);
+    
+    if(image == null) {
+        Response.SetStatus(HttpStatusCode.NotFound);
+        return;
+    }
+    
+    Response.AppendHeader("Content-Disposition", String.Format("filename={0}", HttpUtility.UrlPathEncode(image.Name + image.Extension)));
+    Response.ContentType = "image/" + image.ContentType;
+    new WebImage(image.Contents).Write();
+}

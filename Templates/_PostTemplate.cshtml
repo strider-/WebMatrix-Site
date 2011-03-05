@@ -1,0 +1,27 @@
+﻿@{
+    var post = PageData[0];
+    var onDeletePage = Request.Path.ToLower().Contains("delete");
+    
+    if(post == null) {
+        Response.Redirect("~/index");
+        return;
+    }
+}
+                <h2><a href="@Href("~/post", post.id, post.Slug)">@post.Title</a></h2>
+                <!-- <p> -->
+                    @Html.Raw(post.Content)
+                    <div class="clear"></div>
+                <!-- </p> -->
+                
+				@if(post.Modified != null) {
+                <p class="edited align-right">last edited @post.Modified.ToString("MMM d, yyyy hh:mm tt")</p>
+                }
+                
+				<p class="post-footer align-right">  
+                    @if(!onDeletePage) {
+                    <span><a href="@Href("~/edit", post.id)">Edit</a></span><text>&nbsp;</text>
+                    <span><a href="@Href("~/delete", post.id)">Delete</a></span><text>&nbsp;&nbsp; |</text>
+                    }
+                    <span class="readmore">Posted by @post.Nickname</span>
+					<span class="date">@post.Published.ToString("MMM d, yyyy hh:mm tt")</span>
+				</p>                

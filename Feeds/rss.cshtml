@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;    
+    var model = new Model();
+    var latestPosts = model.GetLatest(20);
+    var absUrl = string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Request.ApplicationPath);
+    
+    Response.ContentType = "text/xml";
+}
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0">
+  <channel>
+    <title>@App.Title</title>
+    <link>@(absUrl + Href("index"))</link>
+    <description>@App.Description</description>
+    <language>en-us</language>
+    <image>
+      <title>@App.Title</title>
+      <url>@(absUrl + Href("images/tekka.png"))</url>
+      <link>@(absUrl + Href("index"))</link>
+      <width>48</width>
+      <height>48</height>
+      <description>warez mad warez</description>
+    </image>
+    @foreach(var post in latestPosts) {        
+    <item>
+      <title>@post.Title</title>
+      <link>@(absUrl + Href("post", post.id, post.Slug))</link>
+      <description><![CDATA[@Html.Raw(post.Content)]]></description>
+      <pubDate>@post.Published.ToString("ddd, d MMM yyyy HH:mm:ss PDT")</pubDate>
+    </item>
+    }
+  </channel>       
+</rss>

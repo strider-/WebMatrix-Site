@@ -1,0 +1,7 @@
+﻿@helper GetNickname(int UserId) {
+    var nick = Database.Open("data").QuerySingle("SELECT Nickname FROM UserProfile WHERE UserId=@0", UserId);
+    if(nick == null) {
+        <text>"Unknown"</text>;
+    }
+    @nick.Nickname;
+}

@@ -1,0 +1,36 @@
+﻿@{
+    var loggedIn = WebSecurity.IsAuthenticated;
+    var model = new Model();
+    var galleries = model.GetGalleries();
+}                
+                @if(loggedIn) {
+                    <h3>Search</h3>	
+                    <form action="@Href("~/search")" class="searchform" method="post">
+                        <p>
+                        <input name="search_query" class="textbox" type="text" />
+                        <input name="search" class="button" value="Search" type="submit" onclick="return search_query.value.trim().length > 0;" />
+                        </p>			
+                    </form>
+                        
+                    <h3>Actions</h3>
+                    <ul class="sidemenu">				
+                        <li><a href="@Href("~/new")">New Post</a></li>
+                    </ul>    
+                
+                if(galleries.Count > 0) {                        
+                    <h3>Galleries</h3>
+                    <ul class="sidemenu">
+                    @foreach(var gallery in galleries) {
+                        <li><a href="@Href("~/Gallery/view", gallery.id)">@gallery.Name</a> (@gallery.ImageCount)</li>
+                    }
+                    </ul>
+                }
+                
+                }
+                    <!-- <h3>Wise Words</h3>
+                    <div class="left-box">
+                        <p>&quot;Evaluation of the past is the first step toward 
+                        vision for the future.&quot; </p>
+                        
+                        <p class="align-right">- Chris Widener</p>
+                    </div>	-->

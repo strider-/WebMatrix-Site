@@ -1,0 +1,30 @@
+﻿@{
+    var model = new Model();
+    var id = UrlData[1].AsInt();
+    var image = model.GetImage(id);
+    bool deleted = false;
+    
+    if(image == null) {
+        Response.Redirect("~/Gallery");
+        return;
+    }
+    
+    if(IsPost) {
+        deleted = model.DeleteImage(image.id);
+    }
+}
+
+@if(deleted) {
+    <h2>Image Deleted</h2>
+    <p><strong>@image.Name</strong> has been deleted.  Click <a href="@Href("~/Gallery/view", image.GalleryId)">here</a> to return to the gallery.</p>
+} else {
+    <h2>Delete Image</h2>
+    <form action="" method="post">
+        <p>Are you sure you want to delete the following image?</p>
+        <img alt="@(image.name + image.Extension)" src="@Href("~/Gallery/image_preview", image.id)" class="thumbnail-no-border" />
+        <p>
+        <span><input class="button" type="submit" value="Delete Image" /></span> | 
+        <span><input class="button" type="button" value="Cancel" onclick="location.href='@Href("~/Gallery/view", image.GalleryId)'" /></span>
+        </p>
+    </form>
+}

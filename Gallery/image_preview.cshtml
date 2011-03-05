@@ -1,0 +1,18 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    // Cache the image
+    Response.OutputCache((int)App.CacheLength);
+
+    var imageId = UrlData[0].AsInt();
+    var model = new Model();
+    
+    var image = model.GetImageThumbnail(200, 200, imageId);
+    
+    if (image == null) {
+        Response.SetStatus(HttpStatusCode.NotFound);
+        return;
+    }
+    
+    image.Write();
+}

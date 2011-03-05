@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+    <head>                
+        <title>@Page.Title</title>
+        <link href="@Href("~/images/Envision.css")" rel="stylesheet" type="text/css" />
+        <link href="@Href("~/images/favicon.png")" rel="icon" type="image/png" />
+        <link href="@Href("~/Feeds/rss")" rel="alternate" type="application/rss+xml" />
+        <meta name="Description" content="My own personal hell" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="Author" content="Michael D. Tighe - striderIIDX@gmail.com" />
+        <meta name="Robots" content="noindex,nofollow" />
+        @if(IsSectionDefined("scripts")) {
+            @RenderSection("scripts")
+        }
+    </head>
+    <body>
+        <!-- wrap starts here -->
+        <div id="wrap">
+                <!--header -->
+                <div id="header">			                        
+                    <h1 id="logo-text"><a href="@Href("~/index")">@App.Title</a></h1>
+                    <p id="slogan">@App.Description</p>		
+                    
+                    <div id="header-links">
+                        @RenderPage("~/Templates/_headerlinks.cshtml")
+                    </div>		                                
+                </div>
+                
+                <!-- menu -->	
+                <div  id="menu">
+                    @RenderPage("~/Templates/_menu.cshtml")
+                </div>					
+                    
+                <!-- content-wrap starts here -->
+                <div id="content-wrap">                        
+                    <div id="sidebar">
+                        @RenderPage("~/Templates/_sidebar.cshtml")
+                    </div>
+                        
+                    <div id="main">
+                        @RenderBody()
+                    </div>                
+                <!-- content-wrap ends here -->	
+                </div>
+                            
+                <!--footer starts here-->
+                <div id="footer">
+                    @RenderPage("~/Templates/_footer.cshtml")
+                </div>	
+        
+        <!-- wrap ends here -->
+        </div>    
+    </body>
+</html>

@@ -1,0 +1,17 @@
+﻿@{ 
+    Page.Title = "Home";
+    var model = new Model();
+    var posts = model.GetLatest(5);
+    
+    if(WebSecurity.IsAuthenticated) {
+        if(posts.Count == 0) {
+            <p><strong>Create a new post &amp; let's get this show on the road</strong></p>
+        } else {
+            foreach(var post in posts) {
+                @RenderPage("~/Templates/_PostTemplate.cshtml", post)
+            }               
+        } 
+    } else {
+        @RenderPage("~/Templates/_NoWayJose.cshtml")
+    }
+}

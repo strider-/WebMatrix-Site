@@ -1,0 +1,16 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    var type = UrlData[0];
+    var id = UrlData[1].AsInt();
+    
+    if((type != "image" && type != "gallery") || id <= 0) {
+        Response.Redirect("~/Gallery");
+        return;
+    }
+    
+    var template = string.Format("~/Templates/_delete_{0}.cshtml", type);
+    Page.Title = "Delete " + Char.ToUpper(type[0]) + type.Substring(1);
+}
+
+@RenderPage(template)

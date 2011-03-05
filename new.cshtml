@@ -1,0 +1,9 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    Page.Title = "New Post";
+    var model = new Model();
+    var post = model.NewPost(WebSecurity.CurrentUserId);
+}
+                <h2>New Post</h2>
+@RenderPage("~/Templates/_PostForm.cshtml", post)

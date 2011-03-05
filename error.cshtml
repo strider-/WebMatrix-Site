@@ -1,0 +1,11 @@
+﻿@{
+    Page.Title = "Error";
+    
+    var path = Request["aspxerrorpath"];
+}
+
+<h1>Error</h1>
+<p>
+    There was an error with the previous request.  Click <a href="@Href(path)">here</a> to go back and try again,
+    or <a href="@Href("~/index")">here</a> to return to the home page.
+</p>

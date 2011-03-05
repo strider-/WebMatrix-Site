@@ -1,0 +1,47 @@
+﻿@{       
+    var post = PageData[0];
+    string title = string.IsNullOrWhiteSpace(post.Title) ? Request.Unvalidated().Form["Title"] : post.Title,
+           content = string.IsNullOrWhiteSpace(post.Content) ? Request.Unvalidated().Form["Content"] : post.Content;
+        
+    if(IsPost) {
+        var model = new Model();
+        int postId = model.SavePost(Request, ModelState);
+        
+        if(postId > 0) {
+            Response.Redirect(Href("~/index", postId));
+            return;
+        }
+    }
+}
+                <script type="text/javascript" src="@Href("~/Scripts/tiny_mce/tiny_mce.js")"></script>
+                <script type="text/javascript">
+                    tinyMCE.init({
+                        mode: "textareas",
+                        theme: "advanced",
+                        relative_urls: false,
+                        remove_script_host: false,
+                        document_base_url: "@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Request.ApplicationPath)",
+                        plugins: "preview,advimage,advlink",
+                        theme_advanced_toolbar_location : "top",
+                        theme_advanced_toolbar_align: "left",
+                        theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,backcolor",                               
+                        theme_advanced_buttons3: "formatselect,fontselect,fontsizeselect,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,preview"
+                    });
+                </script>
+                <form method="post">
+                    <p>
+                        <input type="hidden" name="id" value="@post.id" />
+                        <input type="hidden" name="UserId" value="@post.UserId" />
+                        <label>Title</label>
+                        @Html.ValidationMessage("Title")
+                        <input class="editTitle" type="text" name="Title" value="@title" />
+                        
+                        <label>Content:</label>
+                        @Html.ValidationMessage("Content")
+                        <textarea class="editContent" name="Content">@content</textarea>
+                    </p>
+                    <p class="post-footer align-left">
+                        <span><input class="button" type="submit" value="Save" /></span> | 
+                        <span><input class="button" type="button" value="Cancel" onclick="location.href='@Href("~/index")'" /></span>
+                    </p>
+                </form>

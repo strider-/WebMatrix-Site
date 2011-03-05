@@ -1,0 +1,11 @@
+﻿                <p>
+                    @if(!WebSecurity.IsAuthenticated) {
+                        <a href="@Href("~/Account/Login")">Login</a>
+                    } else {
+                        @Helpers.GetNickname(WebSecurity.CurrentUserId)
+                        <a href="@Href("~/Account/Logout")">[Logout]</a><text> | </text>
+                        <a href="@Href("~/Feeds/rss")">RSS</a>
+                    }
+                    <!-- <a href="index.html">Contact</a> | 
+                    <a href="index.html">Site Map</a> -->
+                </p>

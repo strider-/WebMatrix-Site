@@ -1,0 +1,44 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    Page.Title = "Image Gallery";
+    var model = new Model();
+    
+    if(IsPost) {
+        model.CreateGallery(Request["name"]);
+    }
+    
+    var galleries = model.GetGalleries();
+}
+<h1>Image Gallery</h1>
+<form method="post" action="">    
+        <ul>
+            <li>
+                <label for="name">Create New</label>
+                <input type="text" id="name" name="name" title="Gallery name" placeholder="Gallery name" />
+            </li>
+        </ul>
+        <p class="form-actions">
+            <input type="submit" value="Create" title="Create gallery" class="button" />
+        </p>
+</form>
+<p>
+    @if(galleries.Count == 0) {
+        <p><strong>No galleries have been created yet!</strong></p>
+    } else {
+        foreach (var gallery in galleries) {
+            <div class="gallery">            
+                <span><h3>@gallery.Name</h3></span>
+                <a href="@Href("~/Gallery/view", gallery.Id)">
+                    <img alt="Images from @gallery.Name" src="@Href("~/Gallery/gallery_preview", gallery.Id)" class="thumbnail-no-border" />                        
+                </a>                            
+                <span>
+                    @gallery.ImageCount image(s)
+                </span>
+                <span>
+                    <a title="Delete Gallery" href="@Href("~/Gallery/d", "gallery", @gallery.id)">Delete</a>
+                </span>
+            </div>
+        } 
+    }
+</p>

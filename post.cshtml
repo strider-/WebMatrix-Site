@@ -1,0 +1,22 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    var model = new Model();
+    var postId = UrlData[0].AsInt();
+    var slug = UrlData[1];
+    
+    if(postId <= 0 || string.IsNullOrWhiteSpace(slug)) {
+        Response.Redirect("~/index");
+        return;
+    }
+    
+    var post = model.GetPost(postId, slug);
+    if(post == null) {
+        Response.Redirect("~/index");
+        return;
+    }
+    
+    Page.Title = post.Title;
+}
+
+    @RenderPage("~/Templates/_PostTemplate.cshtml", post)

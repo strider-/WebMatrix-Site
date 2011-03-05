@@ -1,0 +1,13 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    Page.Title = "Edit Post";
+    var model = new Model();
+    var post = model.GetPost(UrlData[0].AsInt());
+    if(post == null) {
+        Response.Redirect("~/index");
+        return;
+    }        
+}
+                <h2>Edit Post</h2>
+@RenderPage("~/Templates/_PostForm.cshtml", post)

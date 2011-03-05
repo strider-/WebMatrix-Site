@@ -1,0 +1,24 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    Page.Title = "Search Results";
+    var model = new Model();
+    var query = Request["search_query"];
+    
+    if(query == null) {
+        Response.Redirect("~/index");
+        return;
+    }
+    
+    var results = model.Search(query);
+}
+
+<h1>Search Results for "@query"</h1>
+
+@if(results.Count == 0) {
+    <p><strong>No posts matched your search terms!</strong></p>    
+} else {
+    foreach(var p in results) {
+        @RenderPage("~/Templates/_PostTemplate.cshtml", p)        
+    }
+}

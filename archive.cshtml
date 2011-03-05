@@ -1,0 +1,31 @@
+﻿@{
+    WebSecurity.RequireAuthenticatedUser();
+    
+    Page.Title = "Archives";
+    var model = new Model();
+    var archive = model.GetArchive();
+    var grid = new WebGrid(archive, columnNames: new[] { "Title", "Author", "Published" }, rowsPerPage: 20, ajaxUpdateContainerId: "grid");
+}
+
+@section scripts {        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> 
+}
+
+<div id="grid">
+    @grid.GetHtml(
+        rowStyle: "row-a",
+        alternatingRowStyle: "row-b",
+        columns: grid.Columns (
+            grid.Column(
+                columnName : "Title",
+                format: @<a href="@Href("~/post", item.id, item.Slug)">@item.Title</a>
+            ),
+            grid.Column(
+                columnName : "Author"
+            ),
+            grid.Column(
+                columnName : "Published",
+                format: @<text>@item.Published.ToString("dddd, MMMM d, yyyy hh:mm:ss tt")</text>
+            )            
+        )
+    )
+</div>

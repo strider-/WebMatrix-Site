@@ -1,0 +1,10 @@
+﻿@if(WebSecurity.IsAuthenticated) {
+                <ul>
+                    <li id="@(Request.Path == "/index" ? "current" : "")"><a href="@Href("~/index")">Home</a></li>                    
+                    <li id="@(Request.Path == "/archive" ? "current" : "")"><a href="@Href("~/archive")">Archives</a></li>
+                    <li id="@(Request.Path == "/Gallery" ? "current" : "")" class="last"><a href="@Href("~/Gallery")">Image Gallery</a></li>
+                    <!-- <li><a href="index.html">Services</a></li>
+                    <li><a href="index.html">Support</a></li>
+                    <li class="last"><a href="index.html">About</a></li>-->
+                </ul>
+}
